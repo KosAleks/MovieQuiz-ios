@@ -19,7 +19,8 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
             }
             return record
         }
-        set { guard let data = try? JSONEncoder().encode(newValue) else {
+        set {
+            guard let data = try? JSONEncoder().encode(newValue) else {
             print("Невозможно сохранить результат")
             return
         }

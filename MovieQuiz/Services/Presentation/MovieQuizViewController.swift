@@ -32,12 +32,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         activityIndicator.startAnimating() // включили анимацию
     }
     
-    func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
-    }
+//    func hideLoadingIndicator() {
+//        activityIndicator.isHidden = true
+//    }
     
     private func showNetworkError (message: String) { // network - сеть Т.е. это ошибка сети
-       hideLoadingIndicator() // скрываем индикатор загрузки
+      // hideLoadingIndicator() // скрываем индикатор загрузки
         
         let model = AlertModel(
             title: "Ошибка",
