@@ -14,7 +14,6 @@ final class AlertPresenter: AlertPresenterProtocol {
     init(alertDelegate: UIViewController?) {
         self.alertDelegate = alertDelegate
     }
-    
     // ведущий оповещения
     func show(alertModel: AlertModel) {
         
