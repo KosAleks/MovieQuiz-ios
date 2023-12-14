@@ -8,7 +8,7 @@
 import Foundation
 
 final class StatisticServiceImplementation: StatisticServiceProtocol {
-   
+    
     
     // MARC -- Properties
     var bestGame: BestGame? {
@@ -36,7 +36,7 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
             return  Double(correct) / Double(total) * 100
         }
     }
-     
+    
     
     private let userDefaults = UserDefaults.standard
     private enum Keys: String {
@@ -66,17 +66,17 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
         set {
             userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
-    
+        
     }
     
     // MARC -- Metods
-   
+    
     func store (correct: Int, total: Int) {
         self.correct = correct
         self.total = total
         self.gamesCount += 1
         
-            let currentBestGame = BestGame(correct: correct, total: total, date: Date())
+        let currentBestGame = BestGame(correct: correct, total: total, date: Date())
         
         if let previosBestGame = bestGame { 
             if currentBestGame.correct > previosBestGame.correct {
@@ -85,6 +85,6 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
         }
     }
 }
-        
-        
-    
+
+
+

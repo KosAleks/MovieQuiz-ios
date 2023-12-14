@@ -24,7 +24,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
         QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false)
     ]
     
-    func requestNextQuestion() {                       // request - запрос. Фабрика должна уметь создавать вопросы
+    func requestNextQuestion() {
         guard let index = (0..<questions.count).randomElement() else {
             delelgate?.didReceiveNextQuestion(question: nil)
             return
@@ -33,7 +33,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
         delelgate?.didReceiveNextQuestion(question: question)
     }
     
-    weak var delelgate: QuestionFactoryDelegate? //такая связь между классами называется агрегацией
+    weak var delelgate: QuestionFactoryDelegate?
     init(delegate: QuestionFactoryDelegate) {
         self.delelgate = delegate
     }
