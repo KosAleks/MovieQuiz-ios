@@ -8,8 +8,8 @@
 protocol StatisticServiceProtocol {
     func store(correct count: Int, total amount: Int)
     
-    var totalAccuracy: Double { get } // средняя точность
-    var gamesCount: Int { get } // количество сыграных квизов
+    var totalAccuracy: Double { get }
+    var gamesCount: Int { get }
     var bestGame: BestGame? { get }
 }
 

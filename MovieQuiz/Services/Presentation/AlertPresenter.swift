@@ -14,23 +14,17 @@ final class AlertPresenter: AlertPresenterProtocol {
     init(alertDelegate: UIViewController?) {
         self.alertDelegate = alertDelegate
     }
-    // ведущий оповещения
+    
     func show(alertModel: AlertModel) {
-        
         let alert = UIAlertController(
             title: alertModel.title,
-            //"Этот раунд окончен!",
-            message: alertModel.message, // "Ваш результат \(correctAnswers)",
+            message: alertModel.message,
             preferredStyle: .alert)
-        
         let action = UIAlertAction(title: alertModel.buttonText, style: .default) {_ in
-            // код, который сбрасывает игру и показывает первый вопрос
             alertModel.completion()
         }
-        
         alertDelegate?.present(alert, animated: true)
         alert.addAction(action)
-        // self.present(alert, animated: true, completion: nil) // present - предоставить. Эта функция автоматом заложена в UIAlertAction
     }
 }
 

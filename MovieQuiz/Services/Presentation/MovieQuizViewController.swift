@@ -23,13 +23,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
-    private var statisticService: StatisticServiceImplementation?
-    
-    
+    private var statisticService: StatisticServiceProtocol?
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel{
-        let questionStep = QuizStepViewModel(image: UIImage(named: model.image) ?? UIImage(), question: model.text, questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-        
+        let questionStep = QuizStepViewModel(
+            image: UIImage(named: model.image) ?? UIImage(),
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
+        )
         return questionStep
     }
     
@@ -77,43 +78,38 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self?.questionFactory?.requestNextQuestion()
             } )
         alertPresenter?.show(alertModel: alertModel)
-        
     }
     
     func makeMessage () -> String {
-        guard let statisticService = statisticService, let bestGame = statisticService.bestGame else {
+        guard let statisticService = statisticService,
+              let bestGame = statisticService.bestGame else {
             assertionFailure("error")
             return ""}
         
-        let string1 = "Ваш результат: \(correctAnswers) / \(questionsAmount)"
-        let string2 = "Количество сыграных квизов: \(statisticService.gamesCount)"
-        let string3 = "Рекорд: \(bestGame.correct) / \(bestGame.total) \n \(bestGame.date.dateTimeString)"
-        let string4 = "Средняя точность: \(String(format:"%.2f", statisticService.totalAccuracy)) %"
+        let resultGame = "Ваш результат: \(correctAnswers)/\(questionsAmount)"
+        let countGame = "Количество сыграных квизов: \(statisticService.gamesCount)"
+        let recordGame = "Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))"
+        let totalAccuracy = "Средняя точность: \(String(format:"%.2f", statisticService.totalAccuracy))%"
         let message = [
-            string1, string2, string3, string4
+            resultGame, countGame, recordGame, totalAccuracy
         ].joined(separator: "\n")
         
         return message
     }
     
-    
-  
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         guard let currentQuestion = currentQuestion else {
             return
-            
         }
         let givenResult = false
         showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
     }
-        @IBAction private func yesButtonClicked(_ sender: UIButton) {
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
         guard let currentQuestion = currentQuestion else {
             return
-            
         }
         let givenResult = true
         showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
-        
     }
     
     override func viewDidLoad() {
@@ -125,7 +121,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         statisticService = StatisticServiceImplementation().self
         print(NSHomeDirectory())
         print(Bundle.main.bundlePath)
-        
     }
     
     // MARK: - QuestionFactoryDelegate
