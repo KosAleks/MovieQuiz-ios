@@ -8,9 +8,7 @@
 import Foundation
 
 final class StatisticServiceImplementation: StatisticServiceProtocol {
-   
     
-    // MARC -- Properties
     var bestGame: BestGame? {
         get {
             guard let data = userDefaults.data(forKey: Keys.bestGame.rawValue),
@@ -21,14 +19,12 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
         }
         set {
             guard let data = try? JSONEncoder().encode(newValue) else {
-            print("Невозможно сохранить результат")
-            return
-        }
+                print("Невозможно сохранить результат")
+                return
+            }
             userDefaults.set(data, forKey: Keys.bestGame.rawValue)
-            
         }
     }
-    
     var totalAccuracy: Double {
         get {
             guard total != 0 else {
@@ -37,8 +33,6 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
             return  Double(correct) / Double(total) * 100
         }
     }
-     
-    
     private let userDefaults = UserDefaults.standard
     private enum Keys: String {
         case correct, total, bestGame, gamesCount
@@ -59,7 +53,6 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
             userDefaults.set(newValue, forKey: Keys.correct.rawValue)
         }
     }
-    
     var gamesCount: Int {
         get {
             userDefaults.integer(forKey: Keys.gamesCount.rawValue)
@@ -67,25 +60,20 @@ final class StatisticServiceImplementation: StatisticServiceProtocol {
         set {
             userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
-    
     }
     
-    // MARC -- Metods
-   
     func store (correct: Int, total: Int) {
         self.correct = correct
         self.total = total
         self.gamesCount += 1
-        
-            let currentBestGame = BestGame(correct: correct, total: total, date: Date())
-        
-        if let previosBestGame = bestGame { 
+        let currentBestGame = BestGame(correct: correct, total: total, date: Date())
+        if let previosBestGame = bestGame {
             if currentBestGame.correct > previosBestGame.correct {
                 bestGame = currentBestGame
             }
         }
     }
 }
-        
-        
-    
+
+
+

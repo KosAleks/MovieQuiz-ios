@@ -11,7 +11,6 @@ protocol MoviesLoading {
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void)
 }
 
-
 struct MoviesLoader: MoviesLoading {
     // MARK: - NetworkClient
     private let networkClient = NetworkClient()
@@ -25,13 +24,6 @@ struct MoviesLoader: MoviesLoading {
         }
         return url
     }
-    
-    //    Нам остаётся реализовать загрузку фильмов в методе loadMovies. Для этого:
-    //    Используйте переменные networkClient и mostPopularMoviesUrl.
-    //    В замыкании обработайте ошибочное состояние и передайте его дальше в handler.
-    //    Преобразуйте данные в MostPopularMovies, используя JSONDecoder.
-    //    Верните их, используя handler.
-    
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void) {
         let networkClient = NetworkClient()
         networkClient.fetch(url: mostPopularMoviesUrl) { result in
@@ -48,12 +40,4 @@ struct MoviesLoader: MoviesLoading {
             }
         }
     }
-    // в параметрах функции у нас замыкание handler - обработчик. Это замыкание, в котором содержится тип Result, он выглядит так:
-    //        public enum Result<Success, Failure> where Failure : Error {
-    //            case success(Success) -  успех
-    //            case failure(Failure) - провал
-    //        }
-    // Запись Result<MostPopularMovies, Error> означает, что нам вернется либо успех с данными типа MostPopularMovies, либо ошибка.
-    
-    // (handler: @escaping (Result<MostPopularMovies, Error>) -> Void)
 }

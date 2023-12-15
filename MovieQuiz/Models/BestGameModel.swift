@@ -6,23 +6,17 @@
 //
 
 import Foundation
-// создаем сообщение об игре
+
 struct BestGame: Codable {
-    let correct: Int // количество правильных ответов
-    let total: Int // количество вопросов квиза
-    let date: Date //  дата
+    let correct: Int
+    let total: Int
+    let date: Date
     
     func isBetterThan(_ another: BestGame) -> Bool {
             correct > another.correct
         }
     }
-//extension BestGame: Comparable {
-//    static func < (lhs: BestGame, rhs: BestGame) -> Bool {
-//      //  lhs.correct < rhs.correct
-//        lhs.correct < rhs.correct
-//    }
-//    }
-    
+
    
 
     

@@ -12,13 +12,10 @@ struct MostPopularMovies: Codable {
     let items: [MostPopularMovie]
 }
 
-
-
 struct MostPopularMovie: Codable {
     let title: String
     let rating: String
     let imageURL: URL
-    
     var resizedImageURL: URL {
         // создаем строку из адреса
         let urlString = imageURL.absoluteString
@@ -29,10 +26,8 @@ struct MostPopularMovie: Codable {
         guard let newURL = URL(string: imageUrlString) else {
             return imageURL
         }
-        
         return newURL
     }
-    
     private enum CodingKeys : String, CodingKey {
         case title = "fullTitle"
         case rating = "imDbRating"
