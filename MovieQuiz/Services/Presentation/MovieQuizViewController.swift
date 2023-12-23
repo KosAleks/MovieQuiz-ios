@@ -65,6 +65,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionLabel.text = step.question
         imageView.layer.borderColor = UIColor.clear.cgColor
     }
+
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -133,14 +134,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader().self, delegate: self)
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(networkClient: NetworkClient()), delegate: self)
         alertPresenter = AlertPresenter(alertDelegate: self)
         showLoadingIndicator()
         questionFactory?.loadData()
         statisticService = StatisticServiceImplementation()
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-        }
     }
     // MARK: - QuestionFactoryDelegate
     
