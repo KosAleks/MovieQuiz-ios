@@ -32,4 +32,21 @@ final class MovieQuizPresenter {
         return questionStep
     }
     
+    var currentQuestion: QuizQuestion?
+    weak var viewController: MovieQuizViewController?
+    
+    func yesButtonClicked() {
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenResult = true
+        viewController?.showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
+    }
+    func noButtonClicked() {
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenResult = false
+        viewController?.showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
+    }
 }

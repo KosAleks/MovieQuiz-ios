@@ -17,12 +17,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private var indexLabel: UILabel!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
+    
     private var correctAnswers = 0
     
     private let questionsAmount: Int = 10
     private let presenter = MovieQuizPresenter()
-    private var questionFactory: QuestionFactoryProtocol? 
+    private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticServiceProtocol?
@@ -59,8 +59,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionLabel.text = step.question
         imageView.layer.borderColor = UIColor.clear.cgColor
     }
-
-    private func showAnswerResult(isCorrect: Bool) {
+    
+    func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
@@ -108,21 +108,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         ].joined(separator: "\n")
         return message
     }
-  
+    
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenResult = false
-        showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.noButtonClicked()
     }
-   
+    
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenResult = true
-        showAnswerResult(isCorrect: givenResult == currentQuestion.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
     
     override func viewDidLoad() {
@@ -133,6 +127,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         showLoadingIndicator()
         questionFactory?.loadData()
         statisticService = StatisticServiceImplementation()
+        presenter.viewController = self
     }
     // MARK: - QuestionFactoryDelegate
     
