@@ -34,12 +34,10 @@ class MovieQuizUITests: XCTestCase {
     func testYesButton() {
         sleep(3)
         let firstPoster = app.images["Poster"]
+        let firstPosterData = firstPoster.screenshot().pngRepresentation
         app.buttons["Yes"].tap()
         sleep(3)
         let secondPoster = app.images["Poster"]
-        XCTAssertFalse(firstPoster == secondPoster)
-        
-        let firstPosterData = firstPoster.screenshot().pngRepresentation
         let secondPosterData = secondPoster.screenshot().pngRepresentation
         XCTAssertFalse(firstPosterData == secondPosterData)
         
@@ -72,13 +70,12 @@ class MovieQuizUITests: XCTestCase {
 //                counter += 1
 //                sleep(3)
 //            }
-//            
+//
 //            let alert = app.alerts["Этот раунд окончен!"]
 //            XCTAssertTrue(alert.exists)
 //            XCTAssertTrue(alert.buttons.firstMatch.label == "Сыграть еще раз")
 //            XCTAssertTrue(alert.label == "Этот раунд окончен!")
-//        }
+       }
+
         
-    }
-}
 

@@ -15,6 +15,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
         self.delegate = delegate
     }
     private var movie: [MostPopularMovie] = []
+    
     func loadData() {
         moviesLoader.loadMovies { [weak self] result in
             DispatchQueue.main.async {
@@ -31,9 +32,17 @@ final class QuestionFactory: QuestionFactoryProtocol {
     }
     func requestNextQuestion() {
         DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
+            guard
+                let self = self else {
+                return
+                
+            }
             let index = (0..<self.movie.count).randomElement() ?? 0
-            guard let movie = self.movie[safe: index] else { return }
+            guard
+                let movie = self.movie[safe: index] else {
+                return
+                
+            }
             var imageData = Data()
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
@@ -41,6 +50,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 print("Failed to load image")
             }
             let rating = Float(movie.rating) ?? 0
+            
             let valueOfRating: Float = .random(in: 1...9.9)
             let text = "Рейтинг этого фильма больше чем \(NSString(format: "%.1f", valueOfRating))?"
             let correctAnswer = rating > valueOfRating
