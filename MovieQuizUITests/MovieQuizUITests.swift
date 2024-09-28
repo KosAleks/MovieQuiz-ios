@@ -77,6 +77,22 @@ class MovieQuizUITests: XCTestCase {
             XCTAssertTrue(alert.label == "Этот раунд окончен!")
         }
     }
+    
+    func testAlertDismiss() {
+        sleep(2)
+        for _ in 1...10{
+            app.buttons["No"].tap()
+            sleep(3)
+        }
+        let alert = app.alerts["Этот раунд окончен!"]
+        alert.buttons.firstMatch.tap()
+        
+        sleep(2)
+        
+        let indexLabel = app.staticTexts["Index"]
+        XCTAssertFalse(alert.exists)
+        XCTAssertTrue(indexLabel.label == "1/10")
+    }
 }
 
 
